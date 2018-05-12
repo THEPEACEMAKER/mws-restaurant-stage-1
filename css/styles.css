@@ -109,11 +109,12 @@ nav h1 a {
 /* ====================== Restaurant Filtering ====================== */
 .filter-options {
   width: 100%;
-  height: 50px;
-  background-color: #3397DB;
+  min-height: 50px;
+  padding: 15px 0;
+  background-color: #007dbb;
   align-items: center;
-
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
 
 }
@@ -140,12 +141,13 @@ nav h1 a {
 #restaurants-list {
   background-color: #f3f3f3;
   list-style: outside none none;
-  margin: 0;
+  margin: 0 auto;
   padding: 30px 15px 60px;
   text-align: center;
 
   display: flex;
   flex-wrap: wrap;
+  max-width: 1200px;
 }
 #restaurants-list li {
   background-color: #fff;
@@ -352,12 +354,11 @@ p.reviewRating {
 
 #restaurant-address {
   color: #ffffff;
-    background-color: #ffa500;
-    padding: 5px 13px;
-    margin: 0 0 20px;
-    border-radius: 3px;
-    display: block;
-    width: initial;
+  background-color: #ffa500;
+  padding: 5px 13px;
+  margin: 0 0 20px;
+  display: block;
+  width: initial;
 }
 
 /*------------table----------*/
@@ -541,22 +542,10 @@ table#restaurant-hours tr td:first-child {
 @media screen and (max-width: 480px){
   .filter-options {
     height: 76px;
+    padding: 10px 0;    
  } 
 
  .filter-options h2 {
     margin-top: 10px;
  }
 }
-
-/*Adel: last: the issues: 
-  1- the map should move above the footer, yet stay if away from it
-  2- the last element in the restaurants list at the home page should be given a width depending on other li width
-  3- the fonts
-  4- the images: Use responsive images that adjust for the dimensions and resolution of any mobile device
-  5- A11y: Focus, Semantics, Styling;
-    - Focus: http://web-accessibility.carnegiemuseums.org/content/maps/;
-    - the description of the map purpose is exatly the whole page, so we need to get it out of focus, and provide a link to the real version of it
-     - for a starter get it out of focus
-  6- PWA
-  7- Use appropriate document type declaration
-*/

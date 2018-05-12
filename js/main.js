@@ -104,6 +104,28 @@ updateRestaurants = () => {
       fillRestaurantsHTML();
     }
   })
+
+// remove aria-selected from the LastSelected option
+  const nLastSelected = nSelect.querySelector("option[aria-selected='true']");
+  if(nLastSelected){
+    nLastSelected.removeAttribute('aria-selected');
+  }
+
+  const cLastSelected = cSelect.querySelector("option[aria-selected='true']");
+  if(cLastSelected){
+    cLastSelected.removeAttribute('aria-selected');
+  }
+
+// add aria-selected to the NewSelected option
+  const nNewSelected = nSelect[nIndex];
+  nNewSelected.setAttribute('aria-selected', 'true');
+
+  const cNewSelected = cSelect[cIndex];
+  cNewSelected.setAttribute('aria-selected', 'true');
+  
+
+
+
 }
 
 /**
@@ -140,6 +162,7 @@ createRestaurantHTML = (restaurant) => {
 
   const image = document.createElement('img');
   image.className = 'restaurant-img';
+  image.setAttribute('alt', restaurant.name + ' restaurant image');
   image.src = DBHelper.imageUrlForRestaurant(restaurant);
   li.append(image);
 
