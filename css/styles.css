@@ -149,18 +149,29 @@ nav h1 a {
   flex-wrap: wrap;
   max-width: 1200px;
 }
-#restaurants-list li {
-  background-color: #fff;
-  border: 2px solid #ccc;
-  font-family: Arial,sans-serif;
-  margin: 15px;
-  min-height: 380px;
-  padding: 0 30px 25px;
-  text-align: left;
-  width: 270px;
 
+#restaurants-list li {
+  font-family: Arial,sans-serif;
+  min-height: 380px;
+  text-align: left;
+  width: 33%;
+  padding-bottom: 30px;
+}
+
+.restaurant-item {
+  margin: 0 15px 30px;
+  border: 2px solid #ccc;
+  background-color: #fff; 
+  padding: 20px; 
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+.restaurant-item p:last-of-type {
   flex-grow: 1;
 }
+
 #restaurants-list .restaurant-img {
   background-color: #ccc;
   display: block;
@@ -548,4 +559,16 @@ table#restaurant-hours tr td:first-child {
  .filter-options h2 {
     margin-top: 10px;
  }
+}
+
+@media screen and (max-width: 1000px){
+ #restaurants-list li {
+    width: 50%;
+  }
+}
+
+@media screen and (max-width: 650px){
+ #restaurants-list li {
+    width: 100%;
+  }
 }
