@@ -172,7 +172,7 @@ createRestaurantHTML = (restaurant) => {
   image.setAttribute( 'sizes', '(max-width: 450px) 300px, (max-width: 650px) 400px, (max-width: 875px) 300px, (max-width: 1000px) 400px, 300px');
   restaurantItem.append(image);
 
-  const name = document.createElement('h1');
+  const name = document.createElement('h3');
   name.innerHTML = restaurant.name;
   restaurantItem.append(name);
 

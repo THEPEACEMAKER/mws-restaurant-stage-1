@@ -177,10 +177,9 @@ nav h1 a {
   display: block;
   margin: 0;
   max-width: 100%;
-  min-height: 248px;
   min-width: 100%;
 }
-#restaurants-list li h1 {
+#restaurants-list li h3 {
   color: #f18200;
   font-family: Arial,sans-serif;
   font-size: 14pt;
@@ -215,7 +214,6 @@ nav h1 a {
   z-index: 1000;
 }
 .inside #map-container {
-  background: blue none repeat scroll 0 0;
   height: calc(100% - 110px);
   position: fixed;
   right: 0;
@@ -273,7 +271,7 @@ nav h1 a {
 }
 
 
-#reviews-container h2 {
+#reviews-container h3 {
   color: #f58500;
   font-size: 24pt;
   font-weight: 300;
@@ -561,6 +559,22 @@ table#restaurant-hours tr td:first-child {
  }
 }
 
+@media screen and (max-width: 350px){
+  .filter-options {
+    height: 130px;
+  }
+
+  .filter-options select {
+    width: -webkit-fill-available;
+    width: -moz-available;
+    margin: 10px 20px;
+  }
+
+  nav h1 {
+    margin: auto;
+  }
+}
+
 @media screen and (max-width: 1000px){
  #restaurants-list li {
     width: 50%;
@@ -572,3 +586,19 @@ table#restaurant-hours tr td:first-child {
     width: 100%;
   }
 }
+
+.skip-link {
+        position: absolute;
+        top: -1000px;
+        left: -1000px;
+        overflow: hidden;
+    }
+    
+    a.skip-link:active, 
+    a.skip-link:focus, 
+    a.skip-link:hover {
+        position: relative;
+        left: 0; 
+        top: 0;
+        overflow: visible; 
+    }
