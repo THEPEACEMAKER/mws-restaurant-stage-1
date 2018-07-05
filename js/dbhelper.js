@@ -16,12 +16,39 @@ class DBHelper {
    * Fetch all restaurants.
    */
   static fetchRestaurants(callback) {
-    fetch(DBHelper.DATABASE_URL)
-    .then(response => response.json())
-    .then(restaurants => callback(null, restaurants))
-    .catch(e =>{
+    showCachedRestaurants().then(restaurants =>{
+      if(restaurants.length != 0){    //if there is data in the cache
+        callback(null, restaurants);
+        // console.log('returned the restaurants from the cache ' + restaurants);
+      }else{    //if there is no data in the cache
+        fetch(DBHelper.DATABASE_URL)
+        .then(response => response.json())
+        .then(restaurants =>{ 
+          // console.log(restaurants);
+          callback(null, restaurants);
+          addRestaurantsToCache(restaurants);
+          // console.log('online');
+        })
+        .catch(e =>{
+          console.log(e);
+          callback(e, null);
+        });        
+      }
+    })
+    .catch(e => {   //if there is a problem in checking the cache
       console.log(e);
-      callback(e, null);
+      fetch(DBHelper.DATABASE_URL)
+      .then(response => response.json())
+      .then(restaurants =>{ 
+        // console.log(restaurants);
+        callback(null, restaurants);
+        addRestaurantsToCache(restaurants);
+        // console.log('online and a problem in the cache');
+      })
+      .catch(e =>{
+        console.log(e);
+        callback(e, null);
+      });              
     });
   }
 
@@ -29,12 +56,36 @@ class DBHelper {
    * Fetch a restaurant by its ID.
    */
   static fetchRestaurantById(id, callback) {
-    fetch(DBHelper.DATABASE_URL + `/${id}`)
-    .then(response => response.json())
-    .then(restaurant => callback(null, restaurant))
-    .catch(e =>{
+    showCachedRestaurant(id).then(restaurant =>{ 
+      if(restaurant != undefined){  //if there is data in the cache
+        callback(null, restaurant);
+        // console.log('returned a restaurant from the cache ' + restaurant);      
+      }else{    //if there is no data in the cache
+        fetch(DBHelper.DATABASE_URL + `/${id}`)
+        .then(response => response.json())
+        .then(restaurant =>{ 
+          callback(null, restaurant);
+          addRestaurantsToCache(restaurant);
+          // console.log('online');
+        })
+        .catch(e =>{
+          console.log(e);
+          callback(e, null);
+        });        
+      }
+    }).catch(e =>{  //if there is a problem in checking the cache
       console.log(e);
-      callback(e, null);
+      fetch(DBHelper.DATABASE_URL + `/${id}`)
+      .then(response => response.json())
+      .then(restaurant =>{ 
+        callback(null, restaurant);
+        addRestaurantsToCache(restaurant);
+        // console.log('online and a problem in the cache');
+      })
+      .catch(e =>{
+        console.log(e);
+        callback(e, null);
+      });              
     });
   }
 
