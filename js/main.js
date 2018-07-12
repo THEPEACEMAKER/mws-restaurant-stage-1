@@ -167,8 +167,8 @@ createRestaurantHTML = (restaurant) => {
   const image = document.createElement('img');
   image.className = 'restaurant-img';
   image.setAttribute('alt', restaurant.name + ' restaurant image');
-  image.src = "/img/"+ restaurant.id +"-300w.jpg";
-  image.setAttribute('srcset', "/img/"+ restaurant.id +"-300w.jpg 300w, /img/"+ restaurant.id +"-400w.jpg 400w");
+  image.src = "/img/"+ restaurant.id +"-300w.webp";
+  image.setAttribute('srcset', "/img/"+ restaurant.id +"-300w.webp 300w, /img/"+ restaurant.id +"-400w.webp 400w");
   image.setAttribute( 'sizes', '(max-width: 450px) 300px, (max-width: 650px) 400px, (max-width: 875px) 300px, (max-width: 1000px) 400px, 300px');
   restaurantItem.append(image);
 
