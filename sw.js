@@ -5,9 +5,9 @@ self.addEventListener('install', function(event){
 			return cache.addAll([
 				'/',
 				// '//normalize-css.googlecode.com/svn/trunk/normalize.css',
-				'js/indexController.js',
-				'js/idb-library.js',
-				'js/idb-script.js',
+				// 'js/indexController.js',
+				'js/offline-script.js',
+				// 'js/idb-script.js',
 				'js/main.js',
 				'js/restaurant_info.js',
 				'css/styles.css',

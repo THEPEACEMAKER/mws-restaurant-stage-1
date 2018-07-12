@@ -8,7 +8,7 @@ var babel = require('gulp-babel');
 
 
 
-gulp.task('default', ['styles','copy-html','copy-images', 'copy-sw', 'scripts-main', 'scripts-restaurant_info', 'copy-idb-library'],defaultTask);
+gulp.task('default', ['styles','copy-html','copy-images', 'copy-sw', 'scripts-main', 'scripts-restaurant_info', 'scripts-offline-script'],defaultTask);
 
 function defaultTask(done) {
   gulp.watch('sass/**/*.scss', ['styles']);
@@ -23,30 +23,32 @@ gulp.task('dist', [
 	'copy-sw-dist',
 	'scripts-main-dist',
 	'scripts-restaurant_info-dist',
-	'copy-idb-library-dist'
+	'scripts-offline-script-dist'
 ]);
 
 gulp.task('scripts-main', function() {
-	gulp.src(['js/main.js', 'js/dbhelper.js'])
+	gulp.src(['js/dbhelper.js', 'js/main.js'])
 		// .pipe(babel())
 		.pipe(concat('main.js'))
 		.pipe(gulp.dest('dist/js'));
 });
 
 gulp.task('scripts-restaurant_info', function() {
-	gulp.src(['js/restaurant_info.js', 'js/dbhelper.js'])
+	gulp.src(['js/dbhelper.js', 'js/restaurant_info.js'])
 		// .pipe(babel())
 		.pipe(concat('restaurant_info.js'))
 		.pipe(gulp.dest('dist/js'));
 });
 
-gulp.task('copy-idb-library', function(){
-	gulp.src('js/idb-library.js')
+gulp.task('scripts-offline-script', function(){
+	gulp.src(['js/indexController.js', 'js/idb-library.js', 'js/idb-script.js'])
+		// .pipe(babel())
+		.pipe(concat('offline-script.js'))			
 		.pipe(gulp.dest('dist/js'));
 });
 
 gulp.task('scripts-main-dist', function() {
-	gulp.src(['js/main.js', 'js/dbhelper.js'])
+	gulp.src(['js/dbhelper.js', 'js/main.js'])
 		.pipe(babel())
 		.pipe(concat('main.js'))
 		.pipe(uglify())
@@ -54,19 +56,28 @@ gulp.task('scripts-main-dist', function() {
 });
 
 gulp.task('scripts-restaurant_info-dist', function() {
-	gulp.src(['js/restaurant_info.js', 'js/dbhelper.js'])
+	gulp.src(['js/dbhelper.js', 'js/restaurant_info.js'])
 		.pipe(babel())
 		.pipe(concat('restaurant_info.js'))
 		.pipe(uglify())
 		.pipe(gulp.dest('dist/js'));
 });
 
-gulp.task('copy-idb-library-dist', function(){
-	gulp.src('js/idb-library.js')
+gulp.task('scripts-offline-script-dist', function(){
+	gulp.src(['js/indexController.js', 'js/idb-library.js', 'js/idb-script.js'])
 		.pipe(babel())
+		.pipe(concat('offline-script.js'))			
 		.pipe(uglify())
 		.pipe(gulp.dest('dist/js'));
 });
+
+// gulp.task('copy-idb-script-dist', function(){
+// 	gulp.src(['js/indexController.js', 'js/idb-script.js'])
+// 		.pipe(babel())
+// 		.pipe(concat('idb-script.js'))	
+// 		.pipe(uglify())
+// 		.pipe(gulp.dest('dist/js'));
+// });
 
 gulp.task('copy-sw', function(){
 	gulp.src('./sw.js')
