@@ -8,7 +8,7 @@ var babel = require('gulp-babel');
 
 
 
-gulp.task('default', ['styles','copy-html','copy-images', 'copy-sw', 'scripts-main', 'scripts-restaurant_info', 'scripts-offline-script'],defaultTask);
+gulp.task('default', ['styles','copy-html','copy-images', 'copy-manifest', 'copy-sw', 'scripts-main', 'scripts-restaurant_info', 'scripts-offline-script'],defaultTask);
 
 function defaultTask(done) {
   gulp.watch('sass/**/*.scss', ['styles']);
@@ -19,6 +19,7 @@ function defaultTask(done) {
 gulp.task('dist', [
 	'copy-html',
 	'copy-images',
+	'copy-manifest',
 	'styles',
 	'copy-sw-dist',
 	'scripts-main-dist',
@@ -99,6 +100,11 @@ gulp.task('copy-html', function(){
 gulp.task('copy-images', function(){
 	gulp.src('img/*')
 		.pipe(gulp.dest('dist/img'));
+});
+
+gulp.task('copy-manifest', function(){
+	gulp.src('./manifest.json')
+		.pipe(gulp.dest('./dist'));
 });
 
 gulp.task('styles', function(){ 

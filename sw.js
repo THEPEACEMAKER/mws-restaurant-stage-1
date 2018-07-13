@@ -4,6 +4,7 @@ self.addEventListener('install', function(event){
 			console.log('caches added to the SW')
 			return cache.addAll([
 				'/',
+				'/manifest.json',
 				// '//normalize-css.googlecode.com/svn/trunk/normalize.css',
 				// 'js/indexController.js',
 				'js/offline-script.js',
@@ -52,6 +53,7 @@ self.addEventListener('install', function(event){
 				'/img/8-600w.webp',
 				'/img/9-600w.webp',
 				'/img/10-600w.webp'
+				// '/img/logo.svg'
 				// 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBxcv426vnVa-jJpL5T5567JakNW1d-7Jw&libraries=places&callback=initMap',
 
 			]).catch(error =>{
