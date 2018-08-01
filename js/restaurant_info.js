@@ -53,7 +53,7 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   name.innerHTML = restaurant.name;
 
   const favorite = document.getElementById('favorite');
-  if (restaurant.is_favorite){
+  if (restaurant.is_favorite == "true"){
     favorite.className = 'is_favorite'
   }else {
     favorite.className = 'is_not_favorite'
@@ -182,7 +182,17 @@ getParameterByName = (name, url) => {
 
   document.getElementById('favorite').addEventListener('click', (event) => {
     const favorite = document.getElementById('favorite');
-    addToFavorite(id=self.restaurant.id, favorite);
+    const id = self.restaurant.id;
+    addToFavorite(id, favorite);
+    fetch(DBHelper.DATABASE_URL + `/${id}`)
+        .then(response => response.json())
+        .then(restaurant =>{ 
+          addRestaurantsToCache(restaurant);
+        })
+        .catch(e =>{
+          console.log(e);
+          callback(e, null);
+        });
   });
 
 addToFavorite = (id, favorite) =>{
