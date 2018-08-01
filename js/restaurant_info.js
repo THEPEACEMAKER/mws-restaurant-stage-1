@@ -52,8 +52,13 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   const name = document.getElementById('restaurant-name');
   name.innerHTML = restaurant.name;
 
-  const address = document.getElementById('restaurant-address');
-  address.innerHTML = restaurant.address;
+  const favorite = document.getElementById('favorite');
+  if (restaurant.is_favorite){
+    favorite.className = 'is_favorite'
+  }else {
+    favorite.className = 'is_not_favorite'
+  }
+
 
   const image = document.getElementById('restaurant-img');
   image.className = 'restaurant-img'
@@ -64,6 +69,9 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
 
   const cuisine = document.getElementById('restaurant-cuisine');
   cuisine.innerHTML = restaurant.cuisine_type;
+
+  const address = document.getElementById('restaurant-address');
+  address.innerHTML = restaurant.address;
 
   // fill operating hours
   if (restaurant.operating_hours) {
@@ -169,3 +177,27 @@ getParameterByName = (name, url) => {
     return '';
   return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }
+
+
+
+  document.getElementById('favorite').addEventListener('click', (event) => {
+    const favorite = document.getElementById('favorite');
+    addToFavorite(id=self.restaurant.id, favorite);
+  });
+
+addToFavorite = (id, favorite) =>{
+    if (favorite.className == "is_favorite"){
+      fetch(DBHelper.DATABASE_URL + `/${id}/?is_favorite=false`, {
+        method: 'PUT'
+      }).then(response =>{
+        favorite.className = 'is_not_favorite';
+      })
+      
+    }else if(favorite.className == "is_not_favorite"){
+      fetch(DBHelper.DATABASE_URL + `/${id}/?is_favorite=true`, {
+        method: 'PUT'
+      }).then(response =>{
+        favorite.className = 'is_favorite';
+      })
+    }
+  };

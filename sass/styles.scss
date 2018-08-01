@@ -303,7 +303,48 @@ nav {
   padding: 40px 0px;
 }
 
-#restaurant-name, #restaurant-cuisine, #restaurant-img, #restaurant-address, #restaurant-hours {
+#restaurant-name {
+  width: 95%;
+  float: left;
+}
+
+#favorite {
+  width: 5%;
+  float: right;
+  height: 29px;
+  margin: 15px 0 30px;
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+  background: url("img/favorite.svg") no-repeat center center;
+  background-size: 100%;
+}
+
+#favorite.is_favorite{
+  background-color: transparent;
+  background: url("img/is_favorite.svg") no-repeat center center;
+  background-size: 100%;  
+}
+#favorite.is_favorite:hover{
+  background-color: transparent;
+  background: url("img/favorite.svg") no-repeat center center;
+  background-size: 100%;  
+}
+
+#favorite.is_not_favorite{
+  background-color: transparent;
+  background: url("img/favorite.svg") no-repeat center center;
+  background-size: 100%;  
+}
+#favorite.is_not_favorite:hover{
+  background-color: transparent;
+  background: url("img/is_favorite.svg") no-repeat center center;
+  background-size: 100%;  
+}
+
+
+
+#restaurant-cuisine, #restaurant-img, #restaurant-address, #restaurant-hours {
   width: 100%;
 }
 
@@ -404,8 +445,36 @@ table#restaurant-hours tr td:first-child {
     border-right: 1px solid #C1C3D1;
 }
 
+.skip-link {
+    position: absolute;
+    top: -1000px;
+    left: -1000px;
+    overflow: hidden;
+}
+    
+a.skip-link:active, 
+a.skip-link:focus, 
+a.skip-link:hover {
+    position: relative;
+    left: 0; 
+    top: 0;
+    overflow: visible; 
+}
 
 /*media Queries*/
+@media screen and (max-width: 1000px){
+ #restaurants-list li {
+    width: 50%;
+  }
+// favorite 
+  #restaurant-name {
+  width: 94%;
+  }
+
+  #favorite {
+    width: 6%;
+  }  
+}
 
 @media screen and (max-width: 827px){
    #restaurant-container {
@@ -417,6 +486,15 @@ table#restaurant-hours tr td:first-child {
     #restaurant-container, #reviews-container {
       width: calc((100% /2) - 40px)
     }
+
+  // favorite 
+    #restaurant-name {
+    width: 93%;
+    }
+
+    #favorite {
+      width: 7%;
+    }    
 }
 
 @media screen and (max-width: 800px) and (min-width: 713px){
@@ -427,6 +505,15 @@ table#restaurant-hours tr td:first-child {
  #restaurant-name {
   font-size: 19pt;
  }
+
+// favorite 
+  #restaurant-name {
+  width: 94%;
+  }
+
+  #favorite {
+    width: 6%;
+  } 
 }
 /*all vertical*/
 @media screen and (max-width: 713px){
@@ -480,6 +567,56 @@ table#restaurant-hours tr td:first-child {
   #restaurant-container {
     padding-top: 0;
   }
+// favorite 
+  #restaurant-name {
+  width: 96%;
+  }
+
+  #favorite {
+    width: 4%;
+  }  
+}
+
+
+@media screen and (max-width: 650px){
+ #restaurants-list li {
+    width: 100%;
+  }
+// favorite 
+  #restaurant-name {
+  width: 95%;
+  }
+
+  #favorite {
+    width: 5%;
+  }
+
+}
+
+/*Main Page*/
+@media screen and (max-width: 577px){
+ .filter-options select {
+    width: min-content;
+ }
+}
+
+@media screen and (max-width: 480px){
+  .filter-options {
+    height: 76px;
+    padding: 10px 0;    
+ } 
+
+ .filter-options h2 {
+    margin-top: 10px;
+ }
+// favorite 
+  #restaurant-name {
+  width: 93%;
+  }
+
+  #favorite {
+    width: 7%;
+  } 
 }
 
 @media screen and (max-width: 450px){
@@ -509,7 +646,9 @@ table#restaurant-hours tr td:first-child {
   #reviews-container {
     padding: 30px 20px 49px;
   }
+
 }
+
 @media screen and (max-width: 425px){
   nav h1 {
     margin: 0 20px;
@@ -539,24 +678,14 @@ table#restaurant-hours tr td:first-child {
     width: 100%;
     padding: 5px 0px;
   }
-}
+// favorite 
+  #restaurant-name {
+  width: 91%;
+  }
 
-/*Main Page*/
-@media screen and (max-width: 577px){
- .filter-options select {
-    width: min-content;
- }
-}
-
-@media screen and (max-width: 480px){
-  .filter-options {
-    height: 76px;
-    padding: 10px 0;    
- } 
-
- .filter-options h2 {
-    margin-top: 10px;
- }
+  #favorite {
+    width: 9%;
+  }
 }
 
 @media screen and (max-width: 350px){
@@ -575,30 +704,5 @@ table#restaurant-hours tr td:first-child {
   }
 }
 
-@media screen and (max-width: 1000px){
- #restaurants-list li {
-    width: 50%;
-  }
-}
 
-@media screen and (max-width: 650px){
- #restaurants-list li {
-    width: 100%;
-  }
-}
 
-.skip-link {
-        position: absolute;
-        top: -1000px;
-        left: -1000px;
-        overflow: hidden;
-    }
-    
-    a.skip-link:active, 
-    a.skip-link:focus, 
-    a.skip-link:hover {
-        position: relative;
-        left: 0; 
-        top: 0;
-        overflow: visible; 
-    }

@@ -25,6 +25,7 @@ In a terminal, check the version of Python you have: `python -V`. If you have Py
 Most of the code in this project has been written to the ES6 JavaScript specification for compatibility with modern web browsers and future proofing JavaScript code. As much as possible, try to maintain use of ES6 in any additional JavaScript you write. 
 
 ---
-The logo image is from [dryicons.com](https://dryicons.com/free-icons/restaurant)
+-The logo image is from [dryicons.com](https://dryicons.com/free-icons/restaurant)
+-The heart icon is made by [Smashicons](https://www.flaticon.com/authors/smashicons) from [www.flaticon.com](https://www.flaticon.com/) and is licensed by [CC 3.0 BY](http://creativecommons.org/licenses/by/3.0/)
 
 
