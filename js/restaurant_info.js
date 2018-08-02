@@ -184,30 +184,45 @@ getParameterByName = (name, url) => {
     const favorite = document.getElementById('favorite');
     const id = self.restaurant.id;
     addToFavorite(id, favorite);
-    fetch(DBHelper.DATABASE_URL + `/${id}`)
-        .then(response => response.json())
-        .then(restaurant =>{ 
-          addRestaurantsToCache(restaurant);
-        })
-        .catch(e =>{
-          console.log(e);
-          callback(e, null);
-        });
+
   });
 
 addToFavorite = (id, favorite) =>{
     if (favorite.className == "is_favorite"){
+      favorite.className = 'is_not_favorite';
+      self.restaurant.is_favorite = "false";
+      addRestaurantsToCache(self.restaurant);
       fetch(DBHelper.DATABASE_URL + `/${id}/?is_favorite=false`, {
         method: 'PUT'
-      }).then(response =>{
-        favorite.className = 'is_not_favorite';
+      }).catch(e =>{
+        console.log(e);
+        if (!navigator.onLine){
+          // console.log("offline");
+          window.addEventListener('online', (event) => {
+            fetch(DBHelper.DATABASE_URL + `/${id}/?is_favorite=false`, {
+              method: 'PUT'
+            })
+          });
+        }
       })
-      
+
     }else if(favorite.className == "is_not_favorite"){
+      favorite.className = 'is_favorite';
+      self.restaurant.is_favorite = "true";
+      addRestaurantsToCache(self.restaurant);      
       fetch(DBHelper.DATABASE_URL + `/${id}/?is_favorite=true`, {
         method: 'PUT'
-      }).then(response =>{
-        favorite.className = 'is_favorite';
+      }).catch(e =>{
+        console.log(e);
+        if (!navigator.onLine){
+          // console.log("offline");
+          window.addEventListener('online', (event) => {
+            fetch(DBHelper.DATABASE_URL + `/${id}/?is_favorite=true`, {
+              method: 'PUT'
+            })
+          });
+        }
       })
     }
   };
+
