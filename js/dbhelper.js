@@ -17,16 +17,24 @@ class DBHelper {
    */
   static fetchRestaurants(callback) {
     showCachedRestaurants().then(restaurants =>{
-      if(restaurants.length != 0){    //if there is data in the cache
+      if(restaurants.length == 10){    //if all restaurants are in the cache
         callback(null, restaurants);
         // console.log('returned the restaurants from the cache ' + restaurants);
-      }else{    //if there is no data in the cache
+      }else{    //if not all restaurants are in the cache
         fetch(DBHelper.DATABASE_URL)
         .then(response => response.json())
         .then(restaurants =>{ 
           // console.log(restaurants);
           callback(null, restaurants);
-          addRestaurantsToCache(restaurants);
+          fetch(`http://localhost:1337/reviews/`)
+          .then(response => response.json())
+          .then(reviews =>{
+            restaurants.forEach((restaurant) => {
+              const restaurantReviews = reviews.filter(r => r.restaurant_id == restaurant.id );
+              restaurant.reviews = restaurantReviews;
+            });
+            addRestaurantsToCache(restaurants);
+          });
           // console.log('online');
         })
         .catch(e =>{
@@ -42,8 +50,16 @@ class DBHelper {
       .then(restaurants =>{ 
         // console.log(restaurants);
         callback(null, restaurants);
-        addRestaurantsToCache(restaurants);
-        // console.log('online and a problem in the cache');
+        fetch(`http://localhost:1337/reviews/`)
+        .then(response => response.json())
+        .then(reviews =>{
+          restaurants.forEach((restaurant) => {
+            const restaurantReviews = reviews.filter(r => r.restaurant_id == restaurant.id );
+            restaurant.reviews = restaurantReviews;
+          });
+          addRestaurantsToCache(restaurants);
+        });
+      // console.log('online and a problem in the cache');          
       })
       .catch(e =>{
         console.log(e);
@@ -64,8 +80,13 @@ class DBHelper {
         fetch(DBHelper.DATABASE_URL + `/${id}`)
         .then(response => response.json())
         .then(restaurant =>{ 
-          callback(null, restaurant);
-          addRestaurantsToCache(restaurant);
+          fetch(`http://localhost:1337/reviews/?restaurant_id=${id}`)
+          .then(response => response.json())
+          .then(reviews =>{
+            restaurant.reviews = reviews;
+            callback(null, restaurant);
+            addRestaurantsToCache(restaurant);
+          });
           // console.log('online');
         })
         .catch(e =>{
@@ -74,18 +95,23 @@ class DBHelper {
         });        
       }
     }).catch(e =>{  //if there is a problem in checking the cache
-      console.log(e);
-      fetch(DBHelper.DATABASE_URL + `/${id}`)
-      .then(response => response.json())
-      .then(restaurant =>{ 
-        callback(null, restaurant);
-        addRestaurantsToCache(restaurant);
-        // console.log('online and a problem in the cache');
-      })
-      .catch(e =>{
         console.log(e);
-        callback(e, null);
-      });              
+        fetch(DBHelper.DATABASE_URL + `/${id}`)
+        .then(response => response.json())
+        .then(restaurant =>{ 
+          fetch(`http://localhost:1337/reviews/?restaurant_id=${id}`)
+            .then(response => response.json())
+            .then(reviews =>{
+              restaurant.reviews = reviews;
+              callback(null, restaurant);
+              addRestaurantsToCache(restaurant);
+            });
+          // console.log('online and a problem in the cache');
+        })
+        .catch(e =>{
+          console.log(e);
+          callback(e, null);
+        });              
     });
   }
 
