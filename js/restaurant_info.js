@@ -136,7 +136,7 @@ createReviewHTML = (review) => {
   reviewHeader.appendChild(name);
 
   const date = document.createElement('p');
-  date.innerHTML = review.date;
+  date.innerHTML = review.updatedAt;
   date.setAttribute('class', 'reviewDate');  
   reviewHeader.appendChild(date);
 

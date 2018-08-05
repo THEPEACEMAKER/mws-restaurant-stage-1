@@ -29,6 +29,10 @@ class DBHelper {
           fetch(`http://localhost:1337/reviews/`)
           .then(response => response.json())
           .then(reviews =>{
+            reviews.forEach((review) => {
+              const readableTime = DBHelper.readableTime(review.updatedAt);
+              review.updatedAt = readableTime;
+            });
             restaurants.forEach((restaurant) => {
               const restaurantReviews = reviews.filter(r => r.restaurant_id == restaurant.id );
               restaurant.reviews = restaurantReviews;
@@ -53,6 +57,10 @@ class DBHelper {
         fetch(`http://localhost:1337/reviews/`)
         .then(response => response.json())
         .then(reviews =>{
+          reviews.forEach((review) => {
+            const readableTime = DBHelper.readableTime(review.updatedAt);
+            review.updatedAt = readableTime;
+          });            
           restaurants.forEach((restaurant) => {
             const restaurantReviews = reviews.filter(r => r.restaurant_id == restaurant.id );
             restaurant.reviews = restaurantReviews;
@@ -83,6 +91,10 @@ class DBHelper {
           fetch(`http://localhost:1337/reviews/?restaurant_id=${id}`)
           .then(response => response.json())
           .then(reviews =>{
+            reviews.forEach((review) => {
+              const readableTime = DBHelper.readableTime(review.updatedAt);
+              review.updatedAt = readableTime;
+            });
             restaurant.reviews = reviews;
             callback(null, restaurant);
             addRestaurantsToCache(restaurant);
@@ -102,6 +114,10 @@ class DBHelper {
           fetch(`http://localhost:1337/reviews/?restaurant_id=${id}`)
             .then(response => response.json())
             .then(reviews =>{
+              reviews.forEach((review) => {
+                const readableTime = DBHelper.readableTime(review.updatedAt);
+                review.updatedAt = readableTime;
+              });
               restaurant.reviews = reviews;
               callback(null, restaurant);
               addRestaurantsToCache(restaurant);
@@ -230,6 +246,24 @@ class DBHelper {
       animation: google.maps.Animation.DROP}
     );
     return marker;
+  }
+
+  static readableTime(timestamp){
+    if (Number.isInteger(timestamp)){
+      const d = new Date(timestamp),
+            day = d.getDate(),
+            month = d.toLocaleString("en-us", {month: "long"}),
+            year = d.getFullYear(),
+            result = month + " " + day + ", " + year;
+      return result;
+    }else{
+      const d = timestamp,
+            day = d.getDate(),
+            month = d.toLocaleString("en-us", {month: "long"}),
+            year = d.getFullYear(),
+            result = month + " " + day + ", " + year;
+      return result;
+    }
   }
 
 }
