@@ -79,6 +79,8 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   }
   // fill reviews
   fillReviewsHTML();
+  // append the form to the end
+  fillFormHTML();  
 }
 
 /**
@@ -179,6 +181,13 @@ getParameterByName = (name, url) => {
 }
 
 
+// append the form to the end
+
+fillFormHTML = () => {
+  const container = document.getElementById('reviews-container');
+  const formDiv = document.getElementById('formDiv');
+  container.appendChild(formDiv);
+}
 
   document.getElementById('favorite').addEventListener('click', (event) => {
     const favorite = document.getElementById('favorite');
