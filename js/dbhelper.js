@@ -249,21 +249,12 @@ class DBHelper {
   }
 
   static readableTime(timestamp){
-    if (Number.isInteger(timestamp)){
       const d = new Date(timestamp),
             day = d.getDate(),
             month = d.toLocaleString("en-us", {month: "long"}),
             year = d.getFullYear(),
             result = month + " " + day + ", " + year;
       return result;
-    }else{
-      const d = timestamp,
-            day = d.getDate(),
-            month = d.toLocaleString("en-us", {month: "long"}),
-            year = d.getFullYear(),
-            result = month + " " + day + ", " + year;
-      return result;
-    }
   }
 
 }

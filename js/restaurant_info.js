@@ -235,3 +235,51 @@ addToFavorite = (id, favorite) =>{
     }
   };
 
+review = () => {
+  const form = document.forms["reviewForm"],
+        name = document.forms["reviewForm"]["name"].value,
+        rating = document.forms["reviewForm"]["rating"].value,
+        comments = document.forms["reviewForm"]["comments"].value,
+        dateTimestamp = new Date().getTime(),
+        date = DBHelper.readableTime(dateTimestamp),
+        id = getParameterByName('id'),
+        UIReview = {
+          "restaurant_id": id,
+          "name": name,
+          "createdAt": date,
+          "updatedAt": date,
+          "rating": rating,
+          "comments": comments          
+        },
+        ServerReview = {
+          "restaurant_id": id,
+          "name": name,
+          "createdAt": dateTimestamp,
+          "updatedAt": dateTimestamp,
+          "rating": rating,
+          "comments": comments                    
+        };
+
+  const ul = document.getElementById('reviews-list');
+  ul.appendChild(createReviewHTML(UIReview));
+
+  self.restaurant.reviews.push(UIReview);
+  addRestaurantsToCache(self.restaurant);
+
+  fetch("http://localhost:1337/reviews/", {
+        method: 'POST',
+        body: JSON.stringify(ServerReview),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then(response => response.json())
+          .then(review =>{
+            console.log(review);
+          })
+          .catch(e =>{
+            console.log(e);
+          });
+
+  form.reset();
+}
+
