@@ -200,7 +200,7 @@ addToFavorite = (id, favorite) =>{
     if (favorite.className == "is_favorite"){
       favorite.className = 'is_not_favorite';
       self.restaurant.is_favorite = "false";
-      addRestaurantsToCache(self.restaurant);
+      addRestaurantToCache(self.restaurant);
       fetch(DBHelper.DATABASE_URL + `/${id}/?is_favorite=false`, {
         method: 'PUT'
       }).catch(e =>{
@@ -218,7 +218,7 @@ addToFavorite = (id, favorite) =>{
     }else if(favorite.className == "is_not_favorite"){
       favorite.className = 'is_favorite';
       self.restaurant.is_favorite = "true";
-      addRestaurantsToCache(self.restaurant);      
+      addRestaurantToCache(self.restaurant);      
       fetch(DBHelper.DATABASE_URL + `/${id}/?is_favorite=true`, {
         method: 'PUT'
       }).catch(e =>{
@@ -264,7 +264,7 @@ review = () => {
   ul.appendChild(createReviewHTML(UIReview));
 
   self.restaurant.reviews.push(UIReview);
-  addRestaurantsToCache(self.restaurant);
+  addRestaurantToCache(self.restaurant);
 
   fetch("http://localhost:1337/reviews/", {
         method: 'POST',
@@ -272,14 +272,44 @@ review = () => {
         headers: {
           'Content-Type': 'application/json'
         }
-      }).then(response => response.json())
-          .then(review =>{
-            console.log(review);
-          })
-          .catch(e =>{
-            console.log(e);
+      }).catch(e =>{
+        console.log(e);
+        if (!navigator.onLine){
+          // console.log("offline");
+          addOfflineReviewToCache(ServerReview);
+          window.addEventListener('online', (event) => {
+            sendOfflineReview();
           });
+        }
+
+      });
 
   form.reset();
 }
 
+
+sendOfflineReview = () => {
+  showOfflineCachedReviews().then(reviews =>{
+    if(reviews != undefined){ //if there are offline reviews in the cache
+      reviews.forEach((review) => {
+        fetch("http://localhost:1337/reviews/", {
+              method: 'POST',
+              body: JSON.stringify(review),
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            }).then(response =>{
+              const timeStamp = review.createdAt;
+              deleteOfflineCachedReview(timeStamp);
+            }).catch(e =>{
+              console.log(e);
+            });
+      });
+    }
+  });
+}
+
+
+window.addEventListener("load", function(event) { //after the load of everything
+  sendOfflineReview();
+});
