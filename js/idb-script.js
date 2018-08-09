@@ -1,6 +1,7 @@
 
 // -----IndexedDB
 
+// openDatabase();
 function openDatabase() {
   // If the browser doesn't support service worker,
   // we don't care about having a database
@@ -9,11 +10,15 @@ function openDatabase() {
   }
 
   return idb.open('restaurantsDB', 1, function(upgradeDb) {
-    var store = upgradeDb.createObjectStore('restaurantsOS', { keyPath: 'id' });
+    var restaurantsOS = upgradeDb.createObjectStore('restaurantsOS', { keyPath: 'id' });
+
+    var restaurantsWithReviewsOS = upgradeDb.createObjectStore('restaurantsWithReviewsOS', { keyPath: 'id' });
   });
 }
 
-// openDatabase();
+// All restaurants but with no reviews
+
+
 function addRestaurantsToCache(restaurants) {
   openDatabase().then(function(db) {
     if (!db) return;
@@ -21,18 +26,15 @@ function addRestaurantsToCache(restaurants) {
     var tx = db.transaction('restaurantsOS', 'readwrite');
     var store = tx.objectStore('restaurantsOS');
 
-    if(restaurants.length == undefined){  //if the length is undefined then it's only one restaurant, not a list
-    	store.put(restaurants);
-    }else{
     restaurants.forEach(function(restaurant) {
       store.put(restaurant);
     });
-	}
     
     return tx.complete;
-  }).then(function(){
-  	// console.log('Added the restaurants to the cache')
-  });
+  })
+  // .then(function(){
+  // 	// console.log('Added the restaurants to the cache')
+  // });
 
 };
 
@@ -49,10 +51,30 @@ function showCachedRestaurants() {
   });
 };
 
+// restaurant with its reviews
+
+
+function addRestaurantToCache(restaurant) {
+  openDatabase().then(function(db) {
+    if (!db) return;
+
+    var tx = db.transaction('restaurantsWithReviewsOS', 'readwrite');
+    var store = tx.objectStore('restaurantsWithReviewsOS');
+
+    store.put(restaurant);
+    
+    return tx.complete;
+  })
+  // .then(function(){
+  //   // console.log('Added the restaurant to the cache')
+  // });
+
+};
+
 function showCachedRestaurant(id) {
   return openDatabase().then(function(db) {
-    var tx = db.transaction('restaurantsOS');
-    var Store = tx.objectStore('restaurantsOS');
+    var tx = db.transaction('restaurantsWithReviewsOS');
+    var Store = tx.objectStore('restaurantsWithReviewsOS');
 
     id = parseInt(id);
 
