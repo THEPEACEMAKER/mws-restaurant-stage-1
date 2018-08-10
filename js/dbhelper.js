@@ -17,7 +17,7 @@ class DBHelper {
    */
   static fetchRestaurants(callback) {
     showCachedRestaurants().then(restaurants =>{
-      if(restaurants != undefined){  //if there is data in the cache
+      if(restaurants.length == 10){  //if all restaurants are in the cache
         callback(null, restaurants);
         // console.log('returned the restaurants from the cache ' + restaurants);
       }else{    //if not all restaurants are in the cache
