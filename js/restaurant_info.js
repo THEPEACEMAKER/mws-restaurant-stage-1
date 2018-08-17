@@ -84,7 +84,10 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   // fill reviews
   fillReviewsHTML();
   // append the form to the end
-  fillFormHTML();  
+  fillFormHTML();
+  // add a meta description
+  document.querySelector('meta[name="description"]')
+  .setAttribute("content", `${restaurant.name}, address: ${restaurant.address}, check out opening hours, customers reviews and ratings`);  
 }
 
 /**
