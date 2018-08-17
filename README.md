@@ -1,9 +1,9 @@
-# Restaurant Reviews Web App 
+# Restaurant Reviews Web App
 ---
 
-##Mobile Web Specialist Nanodegree
+## Mobile Web Specialist Nanodegree
 
-###overview
+### overview
 This is a project I had to finish so that I can pass the `Mobile Web Specialist Nanodegree` from Udacity, and earn the [certificate](https://confirm.udacity.com/JZGH7N7N).
 
 It’s a 3 stages project in which I have converted a non
